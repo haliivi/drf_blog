@@ -1,12 +1,24 @@
 from django.db import models
-from django.conf import settings
 from django.utils import timezone
 from ckeditor_uploader.fields import RichTextUploadingField
 from taggit.managers import TaggableManager
 from django.contrib.auth.models import User
+__all__ = [
+    'Post',
+]
 
 
-class Post(models.Model):
+class BaseModel(models.Model):
+    """
+    Базовый класс модели
+    """
+    objects = models.Manager()
+
+    class Meta:
+        abstract = True
+
+
+class Post(BaseModel):
     h1 = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
     slug = models.SlugField()
