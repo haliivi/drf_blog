@@ -1,6 +1,6 @@
 from django.core.mail import send_mail
 from django.conf import settings
-from rest_framework import viewsets, permissions, pagination, generics
+from rest_framework import viewsets, permissions, pagination, generics, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from taggit.models import Tag
@@ -22,6 +22,8 @@ class PageNumberSetPagination(pagination.PageNumberPagination):
 
 
 class PostViewSet(viewsets.ModelViewSet):
+    search_fields = ['content', 'h1']
+    filter_backends = (filters.SearchFilter,)
     serializer_class = PostSerializer
     queryset = Post.objects.all()
     lookup_field = 'slug'
